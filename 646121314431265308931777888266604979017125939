@@ -109,6 +109,7 @@ local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs
 local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs/LinoriaLib/refs/heads/main/frontheme.lua'))()
 local SaveManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs/LinoriaLib/refs/heads/main/fronmanager.lua'))()
 
+Library:Notify("Cargando script")
 
 local Window = Library:CreateWindow({
     Title = " † Byfron Gang † | Private ",
