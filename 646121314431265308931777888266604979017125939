@@ -1,3 +1,7 @@
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs/LinoriaLib/refs/heads/main/fronlib.lua'))()
+local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs/LinoriaLib/refs/heads/main/frontheme.lua'))()
+local SaveManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs/LinoriaLib/refs/heads/main/fronmanager.lua'))()
+Library:Notify("Cargando script")
 local UserInputService = game:GetService("UserInputService")
 local Heartbeat = game:GetService("RunService").Heartbeat
 local plrs = game:GetService'Players'
@@ -104,12 +108,6 @@ SafeZone.CanCollide = true
 SafeZone.Position = Vector3.new(100000, 100000, 100000)
 SafeZone.Parent = game.Workspace
 SafeZone.Material = "ClayRoofTiles"
-
-local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs/LinoriaLib/refs/heads/main/fronlib.lua'))()
-local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs/LinoriaLib/refs/heads/main/frontheme.lua'))()
-local SaveManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/ZlvXs/LinoriaLib/refs/heads/main/fronmanager.lua'))()
-
-Library:Notify("Cargando script")
 
 local Window = Library:CreateWindow({
     Title = " † Byfron Gang † | Private ",
@@ -779,6 +777,59 @@ local MyButton = LoopGroupBox:AddButton({
     DoubleClick = false,
 })
 
+local AutoSelectGroupBox = Tabs.Main:AddRightGroupbox('Auto Select')
+
+local Pressing = false
+
+AutoSelectGroupBox:AddToggle('MyToggle', {
+    Text = 'Enable',
+    Default = false,
+
+    Callback = function()
+        local stopFlag = false
+        local function pressKey()
+            wait(.5)  
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.KeypadSeven, false, game)
+        end
+    
+        if Pressing then
+            Pressing = false
+            stopFlag = true
+        else
+            Pressing = true
+            stopFlag = false
+            spawn(function()
+                repeat
+                    pressKey()
+                    wait(1)
+                    game:GetService("RunService").Heartbeat:Wait()
+                until stopFlag or not Pressing
+            end)
+        end
+    end
+})
+
+AutoSelectGroupBox:AddDropdown('MyDropdown', {
+    Values = { "Mace","Chainsaw","Knife","Pan","Pencil","Baseball Bat","Scythe", "Emerald Greatsword","Blood Dagger","Frost Spear","Pink Hammer","Steel Sword","Katana","Holloween Dagger" },
+    Default = 8,
+    Multi = false,
+
+    Text = 'Select a weapon',
+
+    Callback = function(weapon)
+        local Mouse = game.Players.LocalPlayer:GetMouse()
+        game:GetService("UserInputService").InputBegan:Connect(function(Input, IsTyping)
+        if IsTyping then return end
+        if Input.KeyCode == Enum.KeyCode.KeypadSeven then
+            local Player = game:GetService("Players").LocalPlayer
+            local Mouse = Player:GetMouse()
+            game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Menu Screen").Enabled = false
+            Player.PlayerGui["Menu Screen"].RemoteEvent:FireServer(weapon)
+            wait(1) end
+        end)
+    end
+})
+
 local MiscGroupBox = Tabs.Main:AddRightGroupbox('Features')
 
 local HlColor = Color3.fromRGB(255,255,255)
@@ -1385,9 +1436,18 @@ MiscGroupBox:AddSlider('MySlider', {
     end
 })
 
-
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
 MenuGroup:AddLabel('Keybind'):AddKeyPicker('MenuKeybind', { Default = 'F1', NoUI = true, Text = 'Menu keybind' })
+local MyButton = MenuGroup:AddButton({
+    Text = 'Rejoin',
+    Func = function()
+        local ts = game:GetService("TeleportService")
+        local p = game:GetService("Players").LocalPlayer     
+        ts:Teleport(game.PlaceId, p)
+    end,
+    DoubleClick = false,
+})
+
 
 Library.ToggleKeybind = Options.MenuKeybind
 ThemeManager:SetLibrary(Library)
